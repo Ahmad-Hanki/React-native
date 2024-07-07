@@ -9,6 +9,12 @@ import path from "../assets/images/path.png";
 import CustomButton from "../components/CustomButton";
 
 export default function App() {
+  const { isLoading, isLoggedIn } = useGlobalContext();
+
+  if (!isLoading && isLoggedIn) {
+    return <Redirect href={"/home"} />;
+  }
+  
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView

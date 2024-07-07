@@ -1,12 +1,16 @@
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, Text, ScrollView, Image, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import logo from "../../assets/images/logo.png";
 import FormField from "../../components/FormField";
 import { useState } from "react";
 import CustomButton from "../../components/CustomButton";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
+import { signin } from "../../lib/appwrite";
+import { useGlobalContext } from "../../context/GlobalContext";
 
 const SignIn = () => {
+  const { setUser, setIsLoggedIn } = useGlobalContext();
+
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -14,11 +18,27 @@ const SignIn = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const submit = () => {
+  const submit = async () => {
     setLoading(true);
-    //
-    //
-    //
+
+    if (!form.email || !form.password) {
+      Alert.alert("Error", "Please fill all the fields");
+
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const result = await signin(form.email, form.password);
+      setIsLoggedIn(true);
+      setUser(result);
+      router.replace("/home");
+    } catch (err) {
+      // becaus off the limitation error:
+      router.replace("/home");
+      Alert.alert("Error", "Something went wrong" + err);
+    }
+
     setLoading(false);
   };
   return (
@@ -58,7 +78,12 @@ const SignIn = () => {
             <Text className="text-lg text-gray-100 font-pregular">
               Don't an have account?
             </Text>
-            <Link className="text-lg font-psemibold text-secondary" href={"/sign-up"}>Sign Up</Link>
+            <Link
+              className="text-lg font-psemibold text-secondary"
+              href={"/sign-up"}
+            >
+              Sign Up
+            </Link>
           </View>
         </View>
       </ScrollView>

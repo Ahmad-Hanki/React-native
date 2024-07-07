@@ -1,25 +1,47 @@
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, Text, ScrollView, Image, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import logo from "../../assets/images/logo.png";
 import FormField from "../../components/FormField";
 import { useState } from "react";
 import CustomButton from "../../components/CustomButton";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
+import { createUser } from "../../lib/appwrite";
+import { useGlobalContext } from "../../context/GlobalContext";
 
 const SignUp = () => {
+  const { setUser, setIsLoggedIn } = useGlobalContext();
+
   const [form, setForm] = useState({
-    usrname: "",
+    username: "",
     email: "",
     password: "",
   });
 
   const [loading, setLoading] = useState(false);
 
-  const submit = () => {
+  const submit = async () => {
     setLoading(true);
-    //
-    //
-    //
+
+    if (!form.username || !form.email || !form.password) {
+      Alert.alert("Error", "Please fill all the fields");
+      setLoading(false);
+      setIsLoggedIn(true);
+      return;
+    }
+
+    try {
+      const result = await createUser({
+        email: form.email,
+        password: form.password,
+        username: form.username,
+      });
+      setUser(result);
+      setLoading
+      router.replace("/home");
+    } catch (err) {
+      Alert.alert("Error", "Something went wrong");
+    }
+
     setLoading(false);
   };
   return (
@@ -36,8 +58,8 @@ const SignUp = () => {
           </Text>
           <FormField
             title="Username"
-            value={form.usrname}
-            handleChangeText={(e) => setForm({ ...form, usrname: e })}
+            value={form.username}
+            handleChangeText={(e) => setForm({ ...form, username: e })}
             otherStyles="mt-10"
           />
           <FormField
@@ -69,7 +91,7 @@ const SignUp = () => {
               className="text-lg font-psemibold text-secondary"
               href={"/sign-in"}
             >
-              Sign in
+              Sign In
             </Link>
           </View>
         </View>
