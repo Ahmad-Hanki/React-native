@@ -5,7 +5,6 @@ import {
   FlatList,
   Image,
   RefreshControl,
-  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import logoSmall from "../../assets/images/logo-small.png";
