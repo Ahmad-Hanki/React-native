@@ -14,6 +14,7 @@ import Trending from "../../components/Trending";
 import EmptyState from "../../components/EmptyState";
 import { getAllPosts } from "../../lib/appwrite";
 import useAppwrite from "../../lib/useAppwrite";
+import Video from "../../components/Video";
 
 const Home = () => {
   const { data: posts, loading, refetch } = useAppwrite(getAllPosts);
@@ -26,9 +27,7 @@ const Home = () => {
       <FlatList
         data={posts} // array, same as map
         keyExtractor={(item) => item.$id} // extract the key
-        renderItem={({ item }) => (
-          <Text className="text-3xl text-white ">{item.title}</Text>
-        )} // the thing i want to render
+        renderItem={({ item }) => <Video video={item} />} // the thing i want to render
         ListHeaderComponent={() => (
           // flat list prop
 
@@ -51,12 +50,12 @@ const Home = () => {
               </View>
             </View>
             <SearchInput />
-            <View className="w-full flex-1 pt-5 pb-8">
+            {/* <View className="w-full flex-1 pt-5 pb-8">
               <Text className="text-gray-100 text-lg font-pregular mt-3">
                 Latest videos
               </Text>
               <Trending post={[{ id: 1 }, { id: 2 }, { id: 3 }] ?? []} />
-            </View>
+            </View> */}
           </View>
         )}
         // flat list prop
