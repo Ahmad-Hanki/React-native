@@ -11,11 +11,11 @@ import { GlobalContext } from "../context/GlobalContext";
 import { useContext } from "react";
 
 export default function App() {
-  const { isLoading, isLoggedIn } = useContext(GlobalContext);
+  // const { isLoading, isLoggedIn } = useContext(GlobalContext);
 
-  if (!isLoading && isLoggedIn) {
-    return <Redirect href={"/home"} />;
-  }
+  // if (!isLoading && isLoggedIn) {
+  //   return <Redirect href={"/home"} />;
+  // }
 
   return (
     <SafeAreaView className="bg-primary h-full">

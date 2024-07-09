@@ -5,28 +5,29 @@ import {
   FlatList,
   Image,
   RefreshControl,
+  Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logoSmall from "../../assets/images/logo-small.png";
 import SearchInput from "../../components/SearchInput";
 import Trending from "../../components/Trending";
 import EmptyState from "../../components/EmptyState";
+import { getAllPosts } from "../../lib/appwrite";
+import useAppwrite from "../../lib/useAppwrite";
 
 const Home = () => {
-  const [refreshing, setRefreshing] = useState();
+  const { data: posts, loading, refetch } = useAppwrite(getAllPosts);
 
   const onRefresh = async () => {
-    setRefreshing(true);
-    //recall videos
-    setRefreshing(false);
+    await refetch();
   };
   return (
     <SafeAreaView className="bg-primary py-3 h-full">
       <FlatList
-        data={[{ id: 1 }, { id: 2 }, { id: 3 }]} // array, same as map
+        data={posts} // array, same as map
         keyExtractor={(item) => item.$id} // extract the key
         renderItem={({ item }) => (
-          <Text className="text-3xl text-white ">{item.id}</Text>
+          <Text className="text-3xl text-white ">{item.title}</Text>
         )} // the thing i want to render
         ListHeaderComponent={() => (
           // flat list prop
@@ -69,7 +70,7 @@ const Home = () => {
         // flat list prop
         // you can scroll app so you can refresh! beautiful.
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          <RefreshControl refreshing={loading} onRefresh={onRefresh} />
         }
       />
     </SafeAreaView>
