@@ -7,14 +7,16 @@ import logo from "../assets/images/logo.png";
 import cards from "../assets/images/cards.png";
 import path from "../assets/images/path.png";
 import CustomButton from "../components/CustomButton";
+import { GlobalContext } from "../context/GlobalContext";
+import { useContext } from "react";
 
 export default function App() {
-  const { isLoading, isLoggedIn } = useGlobalContext();
+  const { isLoading, isLoggedIn } = useContext(GlobalContext);
 
   if (!isLoading && isLoggedIn) {
     return <Redirect href={"/home"} />;
   }
-  
+
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView

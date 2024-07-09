@@ -2,14 +2,14 @@ import { View, Text, ScrollView, Image, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import logo from "../../assets/images/logo.png";
 import FormField from "../../components/FormField";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import CustomButton from "../../components/CustomButton";
 import { Link, router } from "expo-router";
 import { createUser } from "../../lib/appwrite";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { GlobalContext } from "../../context/GlobalContext";
 
 const SignUp = () => {
-  const { setUser, setIsLoggedIn } = useGlobalContext();
+  const { setUser, setIsLoggedIn } = useContext(GlobalContext);
 
   const [form, setForm] = useState({
     username: "",
