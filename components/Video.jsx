@@ -3,8 +3,9 @@ import menu from "../assets/icons/menu.png";
 import PPlay from "../assets/icons/play.png";
 
 import { useState } from "react";
+import { ResizeMode, Video as Vd } from "expo-av";
 
-const Video = ({ video: { title, thumbnail, video, username, avatar } }) => {
+const Video = ({ video: { title, thumbnail, video, avatar } }) => {
   const [play, setPlay] = useState(false);
   return (
     <View className="flex-col items-center px-4 mb-14">
@@ -39,7 +40,18 @@ const Video = ({ video: { title, thumbnail, video, username, avatar } }) => {
       </View>
 
       {play ? (
-        <Text className="text-white">Playing</Text>
+        <Vd
+          resizeMode={ResizeMode.CONTAIN}
+          source={{ uri: video }}
+          className="w-full h-60 rounded-xl mt-3"
+          useNativeControls
+          shouldPlay // plays imminently
+          onPlaybackStatusUpdate={(s) => {
+            if (s.didJustFinish) {
+              setPlay(false);
+            }
+          }}
+        />
       ) : (
         <TouchableOpacity
           activeOpacity={0.7}

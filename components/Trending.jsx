@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import PPlay from "../assets/icons/play.png";
+import { Video, ResizeMode } from "expo-av";
 
 const zoomIn = {
   0: {
@@ -28,7 +29,7 @@ const zoomOut = {
 
 const TrendingItem = ({ activeItem, item }) => {
   const [play, setPlay] = useState(false);
-
+  console.log(item.video);
   return (
     <Animatable.View
       className="mr-5"
@@ -36,8 +37,20 @@ const TrendingItem = ({ activeItem, item }) => {
       animation={activeItem == item.$id ? zoomIn : zoomOut}
     >
       {play && (
+        // using expo AV
         <>
-          <Text className="text-white">playing</Text>
+          <Video
+            resizeMode={ResizeMode.CONTAIN}
+            source={{ uri: "https://www.w3schools.com/html/mov_bbb.mp4" }}
+            className="w-52 h-72 rounded-[35px] mt-3 bg-white/10"
+            useNativeControls
+            shouldPlay // plays imminently
+            onPlaybackStatusUpdate={(s) => {
+              if (s.didJustFinish) {
+                setPlay(false);
+              }
+            }}
+          />
         </>
       )}
       {!play && (
@@ -81,7 +94,6 @@ const Trending = ({ post }) => {
       renderItem={({ item }) => (
         <TrendingItem activeItem={activeItem} item={item} />
       )}
-
       horizontal
       // makes you swipe
       onViewableItemsChanged={viewableItemsChanged}
