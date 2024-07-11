@@ -1,8 +1,6 @@
 import { View, Text, SafeAreaView, FlatList } from "react-native";
-import React, { useEffect, useState } from "react";
-import logoSmall from "../../assets/images/logo-small.png";
+import React, { useEffect } from "react";
 import SearchInput from "../../components/SearchInput";
-import Trending from "../../components/Trending";
 import EmptyState from "../../components/EmptyState";
 import { searchPosts } from "../../lib/appwrite";
 import useAppwrite from "../../lib/useAppwrite";
@@ -11,7 +9,7 @@ import { useLocalSearchParams } from "expo-router";
 
 const Search = () => {
   const { query } = useLocalSearchParams();
-  const { data: posts, refetch } = useAppwrite(async() => {
+  const { data: posts, refetch } = useAppwrite(async () => {
     await searchPosts(query);
   });
 

@@ -1,6 +1,6 @@
 import { View, Text, Image } from "react-native";
 import React from "react";
-import { Tabs, Redirect } from "expo-router";
+import { Tabs } from "expo-router";
 
 import home from "../../assets/icons/home.png";
 import bookmark from "../../assets/icons/bookmark.png";
@@ -42,7 +42,6 @@ const TabsLayout = () => {
             height: 84,
           },
         }}
-        className=""
       >
         <Tabs.Screen
           name="home"

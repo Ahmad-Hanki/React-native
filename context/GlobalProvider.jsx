@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { GlobalContext } from "./GlobalContext";
 import { getCurrentUser } from "../lib/appwrite";
-
 const GlobalProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);

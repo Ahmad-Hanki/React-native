@@ -6,7 +6,7 @@ import {
   Image,
   RefreshControl,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logoSmall from "../../assets/images/logo-small.png";
 import SearchInput from "../../components/SearchInput";
 import Trending from "../../components/Trending";
@@ -14,6 +14,7 @@ import EmptyState from "../../components/EmptyState";
 import { getAllPosts, getLatestPosts } from "../../lib/appwrite";
 import useAppwrite from "../../lib/useAppwrite";
 import Video from "../../components/Video";
+import { GlobalContext } from "../../context/GlobalContext";
 
 const Home = () => {
   const { data: posts, loading, refetch } = useAppwrite(getAllPosts);

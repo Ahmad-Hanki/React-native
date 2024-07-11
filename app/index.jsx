@@ -22,7 +22,7 @@ export default function App() {
       <ScrollView
         contentContainerStyle={{
           // so they be able to scroll
-          height: "100%",
+          height: "110%",
         }}
       >
         <View className="w-full items-center justify-center min-h-[85vh] px-4">
